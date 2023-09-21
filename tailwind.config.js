@@ -6,7 +6,11 @@ module.exports = {
         extend: {
             colors: {
                 'primary': '#13111C',
-                'secondary': '#37132E',
+                'secondary': '#A21BE6',
+            },
+            container: {
+                center: true,
+                padding: '2rem',
             },
             screens: {
                 sm: '640px',
