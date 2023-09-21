@@ -1,15 +1,23 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import axios from "axios";
+import { useRouter } from "vue-router";
+import CityList from "@/components/CityList.vue";
 
 interface MapboxResponse {
   features: {
-    place_name: string}[];
+    place_name: string;
+    geometry: {
+      coordinates: [number, number];
+    };
+  }[];
 }
+
+const router = useRouter();
 
 const search = ref("");
 const timeoutId = ref<number | null>(null);
-const results = ref<MapboxResponse['features']>([]);
+const results = ref<MapboxResponse["features"]>([]);
 
 const handleSearch = () => {
   if (timeoutId.value !== null) {
@@ -20,7 +28,7 @@ const handleSearch = () => {
     if (search.value.length !== 0) {
       try {
         const response = await axios.get(
-            `https://api.mapbox.com/geocoding/v5/mapbox.places/${search.value}.json?access_token=${import.meta.env.VITE_MAPBOX_TOKEN}`
+            `https://api.mapbox.com/geocoding/v5/mapbox.places/${search.value}.json?access_token=pk.eyJ1IjoiZnJhbmNpc2NvNzgzMDAiLCJhIjoiY2xtdGg3aXAxMDV2NzJ4bGVrY3pmY3ZpNiJ9.zHfrmNTNuOoFQAK--MiNIQ&types=place`
         );
         results.value = response.data.features;
       } catch (error) {
@@ -32,6 +40,22 @@ const handleSearch = () => {
 
     results.value = [];
   }, 500);
+};
+
+const previewCity = (result: MapboxResponse["features"][0]) => {
+  console.log(result);
+  const [city, state, country] = result.place_name.split(", ");
+  router.push({
+    name: "city",
+    params: {
+      city: city,
+      state: state.replace("", ""),
+    },
+    query: {
+      lat: result.geometry.coordinates[1],
+      lng: result.geometry.coordinates[0],
+    },
+  });
 };
 </script>
 
@@ -50,10 +74,21 @@ const handleSearch = () => {
             v-for="(result, index) in results"
             :key="index"
             class="px-4 py-2 hover:bg-secondary hover:text-primary cursor-pointer"
+            @click="previewCity(result)"
         >
           {{ result.place_name }}
         </li>
       </ul>
+    </div>
+    <div class="flex flex-col gap-4">
+      <Suspense>
+        <CityList />
+        <template #fallback>
+         <div>
+           Aucun emplacement ajouté. Pour commencer à suivre un emplacement, effectuez une recherche dans le champ ci-dessus.
+         </div>
+        </template>
+      </Suspense>
     </div>
   </main>
 </template>
