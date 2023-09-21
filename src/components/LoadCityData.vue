@@ -2,6 +2,15 @@
 import {useRouter} from "vue-router";
 import axios from "axios";
 
+interface City {
+  id: string;
+  city: string;
+  coords: {
+    lat: string;
+    lng: string;
+  };
+}
+
 const router = useRouter();
 
 const loadCityData = async () => {
@@ -30,7 +39,13 @@ const loadCityData = async () => {
 const data = await loadCityData();
 
 const removeCity = () => {
-  const cities = JSON.parse(localStorage.getItem("savedCities"));
+  const savedCitiesJSON = localStorage.getItem("savedCities");
+  let cities: string[] = [];
+
+  if (savedCitiesJSON !== null) {
+    cities = JSON.parse(savedCitiesJSON);
+  }
+
   const updatedCities = cities.filter(
       (city: any) => city.id !== router.currentRoute.value.query.id
   );
