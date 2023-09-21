@@ -99,7 +99,7 @@ const removeCity = () => {
         @click="removeCity"
     >
       <i class="fa-solid fa-trash"></i>
-      <p>Remove City</p>
+      <p>Retirer la ville</p>
     </div>
   </div>
 </template>
