@@ -1,19 +1,22 @@
 <script setup lang="ts">
-import {ref, onMounted} from "vue";
-import {useRoute, useRouter} from "vue-router";
-import {uid} from "uid";
+import { ref, onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { v4 as uuidv4 } from 'uuid';
 
 const savedCities = ref<any[]>([]);
 const route = useRoute();
 const router = useRouter();
 
 const addCity = () => {
-  if (localStorage.getItem("savedCities")) {
-    savedCities.value = JSON.parse(localStorage.getItem("savedCities")) || [];
+  const savedCitiesJSON = localStorage.getItem("savedCities");
+  let existingCities: any[] = [];
+
+  if (savedCitiesJSON !== null) {
+    existingCities = JSON.parse(savedCitiesJSON);
   }
 
   const locationObj = {
-    id: uid(),
+    id: uuidv4(),
     state: route.params.state,
     city: route.params.city,
     coords: {
@@ -22,19 +25,19 @@ const addCity = () => {
     },
   };
 
-  savedCities.value.push(locationObj);
-  localStorage.setItem("savedCities", JSON.stringify(savedCities.value));
+  existingCities.push(locationObj);
+  localStorage.setItem("savedCities", JSON.stringify(existingCities));
 
   let query = Object.assign({}, route.query);
   delete query.preview;
   query.id = locationObj.id;
-  router.replace({query});
+  router.replace({ query });
 };
 
-
 onMounted(() => {
-  if (localStorage.getItem("savedCities")) {
-    savedCities.value = JSON.parse(localStorage.getItem("savedCities")) || [];
+  const savedCitiesJSON = localStorage.getItem("savedCities");
+  if (savedCitiesJSON !== null) {
+    savedCities.value = JSON.parse(savedCitiesJSON) || [];
   }
 });
 </script>
