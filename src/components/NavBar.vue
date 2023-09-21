@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+
+</script>
 
 <template>
 <header class="sticky top-0 bg-primary shadow-lg">
@@ -9,11 +11,6 @@
         <p class="text-3xl">La météo locale</p>
       </div>
     </RouterLink>
-
-    <div class="flex flex-1 gap-3 justify-end">
-      <i class="fa-solid fa-circle-info text-2xl hover:text-secondary duration-150 cursor-pointer"></i>
-      <i class="fa-solid fa-plus text-2xl hover:text-secondary duration-150 cursor-pointer"></i>
-    </div>
   </nav>
 </header>
 </template>
