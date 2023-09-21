@@ -13,5 +13,6 @@
     "moduleResolution": "Bundler",
     "types": ["node"],
     "target": "ES2021",
+    "allowJs": true
   }
 }
