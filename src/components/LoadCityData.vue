@@ -27,7 +27,7 @@ const loadCityData = async () => {
   }
 };
 
-const data = await LoadCityData();
+const data = await loadCityData();
 
 const removeCity = () => {
   const cities = JSON.parse(localStorage.getItem("savedCities"));
