@@ -1,22 +1,32 @@
 <script setup lang="ts">
-import {computed} from "vue";
-import {useRoute} from "vue-router";
-import {useSavedCitiesStore} from "@/stores/savedCities";
-import {v4 as uuidv4} from 'uuid';
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+import { useSavedCitiesStore } from '@/stores/savedCities'
+import { v4 as uuidv4 } from 'uuid'
 
-const route = useRoute();
-const savedCitiesStore = useSavedCitiesStore();
+interface City {
+  id: string
+  state: string
+  city: string
+  coords: {
+    lat: string
+    lng: string
+  }
+}
+
+const route = useRoute()
+const savedCitiesStore = useSavedCitiesStore()
 
 const isCitySaved = computed(() => {
-  return savedCitiesStore.cities.some(city => city.city === route.params.city);
-});
-console.log(route.query.lat, route.query.lng);
+  return savedCitiesStore.cities.some((city) => city.city === route.params.city)
+})
+console.log(route.query.lat, route.query.lng)
 
 const toggleCitySaved = () => {
   if (isCitySaved.value) {
-    const city = savedCitiesStore.cities.find(city => city.city === route.params.city);
+    const city = savedCitiesStore.cities.find((city) => city.city === route.params.city)
     if (city) {
-      savedCitiesStore.removeCity(city.id);
+      savedCitiesStore.removeCity(city.id)
     }
   } else {
     const locationObj = {
@@ -25,12 +35,12 @@ const toggleCitySaved = () => {
       city: route.params.city,
       coords: {
         lat: route.query.lat,
-        lng: route.query.lng,
-      },
-    };
-    savedCitiesStore.addCity(<any>locationObj);
+        lng: route.query.lng
+      }
+    }
+    savedCitiesStore.addCity(<City>locationObj)
   }
-};
+}
 </script>
 
 <template>
@@ -43,11 +53,12 @@ const toggleCitySaved = () => {
         </div>
       </router-link>
 
-      <div v-if="route.query" class="flex flex-1 gap-3 justify-end">
+      <div class="flex flex-1 gap-3 justify-end">
         <i
-            class="fa-solid fa-heart text-2xl hover:text-secondary duration-150 cursor-pointer"
-            :class="{ 'text-red-500': isCitySaved }"
-            @click="toggleCitySaved"
+          class="fa-solid fa-heart text-2xl hover:text-red-500 duration-150 cursor-pointer"
+          :class="{ 'text-red-500': isCitySaved }"
+          @click="toggleCitySaved"
+          v-if="route.query"
         ></i>
       </div>
     </nav>

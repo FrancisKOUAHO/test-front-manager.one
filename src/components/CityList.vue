@@ -1,55 +1,54 @@
 <template>
   <div v-for="city in savedCities" :key="city.id">
-    <CityCard :city="city" @click="goToCityView(city)"/>
+    <CityCard :city="city" @click="goToCityView(city)" />
   </div>
 
   <p v-if="savedCities.length === 0">
-    Aucun emplacement ajouté. Pour commencer à suivre un emplacement, recherchez-le dans le champ ci-dessus.
+    Aucun emplacement ajouté. Pour commencer à suivre un emplacement, recherchez-le dans le champ
+    ci-dessus.
   </p>
 </template>
 
 <script setup>
-import axios from "axios";
-import {ref} from "vue";
-import {useRouter} from "vue-router";
-import CityCard from "@/components/CityCard.vue";
+import axios from 'axios'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import CityCard from '@/components/CityCard.vue'
 
-const savedCities = ref([]);
+const savedCities = ref([])
 const getCities = async () => {
-  if (localStorage.getItem("savedCities")) {
-    savedCities.value = JSON.parse(
-        localStorage.getItem("savedCities")
-    );
+  if (localStorage.getItem('savedCities')) {
+    savedCities.value = JSON.parse(localStorage.getItem('savedCities'))
 
-    const requests = [];
+    const requests = []
     savedCities.value.forEach((city) => {
       requests.push(
-          axios.get(
-              `https://api.openweathermap.org/data/2.5/weather?lat=${city.coords.lat}&lon=${city.coords.lng}&appid=7efa332cf48aeb9d2d391a51027f1a71&units=imperial`
-          )
-      );
-    });
+        axios.get(
+          `https://api.openweathermap.org/data/2.5/weather?lat=${city.coords.lat}&lon=${city.coords.lng}&appid=7efa332cf48aeb9d2d391a51027f1a71&units=imperial`
+        )
+      )
+    })
 
-    const weatherData = await Promise.all(requests);
+    const weatherData = await Promise.all(requests)
 
     weatherData.forEach((value, index) => {
-      savedCities.value[index].weather = value.data;
-    });
+      savedCities.value[index].weather = value.data
+    })
   }
-};
-await getCities();
+}
 
-const router = useRouter();
+await getCities()
+
+const router = useRouter()
 const goToCityView = (city) => {
-  console.log(city)
   router.push({
-    name: "cityView",
-    params: {state: city.state, city: city.city},
+    name: 'cityView',
+    params: { state: city.state, city: city.city },
     query: {
       id: city.id,
       lat: city.coords.lat,
-      lng: city.coords.lng,
-    },
-  });
-};
+      lng: city.coords.lng
+    }
+  })
+}
 </script>

@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import LoadCityData from "@/components/LoadCityData.vue";
+import LoadCityData from '@/components/LoadCityData.vue'
 </script>
 
 <template>
   <div>
     <Suspense>
-      <LoadCityData/>
+      <LoadCityData />
       <template #fallback>
         <div>Chargement...</div>
       </template>
@@ -13,6 +13,4 @@ import LoadCityData from "@/components/LoadCityData.vue";
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
