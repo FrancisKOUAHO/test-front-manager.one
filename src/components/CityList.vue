@@ -1,7 +1,7 @@
 <template>
   <div class="flex gap-28 flex-wrap w-full">
     <div v-for="city in savedCities" :key="city.id">
-      <CityCard :city="city" @click="goToCityView(city)" />
+      <CityCard :city="city" @click="viewCity(city)" />
     </div>
   </div>
 
@@ -18,16 +18,16 @@ import { useRouter } from 'vue-router'
 import CityCard from '@/components/CityCard.vue'
 
 const savedCities = ref([])
-const getCities = async () => {
+const fetchCities = async () => {
   if (localStorage.getItem('savedCities')) {
     savedCities.value = JSON.parse(localStorage.getItem('savedCities'))
 
     const requests = []
     savedCities.value.forEach((city) => {
       requests.push(
-        axios.get(
-          `https://api.openweathermap.org/data/2.5/weather?lat=${city.coords.lat}&lon=${city.coords.lng}&appid=7efa332cf48aeb9d2d391a51027f1a71&units=imperial`
-        )
+          axios.get(
+              `https://api.openweathermap.org/data/2.5/weather?lat=${city.coords.lat}&lon=${city.coords.lng}&appid=7efa332cf48aeb9d2d391a51027f1a71&units=imperial`
+          )
       )
     })
 
@@ -39,10 +39,10 @@ const getCities = async () => {
   }
 }
 
-await getCities()
+await fetchCities()
 
 const router = useRouter()
-const goToCityView = (city) => {
+const viewCity = (city) => {
   router.push({
     name: 'city',
     params: { state: city.state, city: city.city },

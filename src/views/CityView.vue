@@ -5,9 +5,13 @@ import LoadCityData from '@/components/LoadCityData.vue'
 <template>
   <div>
     <Suspense>
-      <LoadCityData />
+      <LoadCityData/>
       <template #fallback>
-        <div>Chargement...</div>
+        <div class="flex justify-center items-center text-white">
+          <h2>
+            Chargement des données ....
+          </h2>
+        </div>
       </template>
     </Suspense>
   </div>

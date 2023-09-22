@@ -64,11 +64,9 @@ onBeforeUnmount(() => {
 });
 
 const getCurrentTime = () => {
-  const cityTimezoneOffset = data.timezone_offset || 0;
-  const currentUTC = data.current.dt * 1000 + cityTimezoneOffset * 1000;
-  const currentTime = new Date(currentUTC);
-  const hours = currentTime.getHours();
-  const minutes = currentTime.getMinutes();
+  const currentTimeUTC = new Date(data.currentTime);
+  const hours = currentTimeUTC.getHours();
+  const minutes = currentTimeUTC.getMinutes();
 
   const formattedTime =
       `${hours % 12 || 12}:${minutes.toString().padStart(2, '0')} ` +
@@ -76,6 +74,8 @@ const getCurrentTime = () => {
 
   return formattedTime;
 };
+
+console.log("data", data)
 </script>
 
 <template>
@@ -90,7 +90,33 @@ const getCurrentTime = () => {
 
       <div>
         <h1 class="text-xl text-white mt-28">Aperçu de la situation actuelle</h1>
-        <p class="text-sm text-white mt-2"></p>
+
+        <div class="flex flex-wrap justify-center gap-5 mb-32 w-full mt-16">
+
+          <div
+              class="flex justify-around items-center gap-4 text-white border border-white rounded-b shadow-2xl sm:rounded-lg bg-secondary p-6 mt-4 w-[400px]">
+            <i class="fa-solid fa-compress text-2xl"></i>
+            <div class="flex-col">
+              <h4 class="mb-2">Pression atmosphérique</h4>
+              <p class="flex-1 text-center">
+                {{ Math.round(data.daily[0].pressure) }}
+                <spa>hPa</spa>
+              </p>
+            </div>
+          </div>
+
+          <div
+              class="flex justify-around items-center gap-4 text-white border border-white rounded-b shadow-2xl sm:rounded-lg bg-secondary p-6 mt-4 w-[400px]">
+            <i class="fa-solid fa-water text-2xl"></i>
+            <div class="flex-col">
+              <h4 class="mb-2">Humidité</h4>
+              <p class="flex-1 text-center">
+                {{ Math.round(data.daily[0].humidity) }}
+                <spa>hPa</spa>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="text-white">
@@ -183,7 +209,7 @@ const getCurrentTime = () => {
             :direction="'vertical'"
             :pagination="{clickable: screenWidth >= 640 }"
             :style="{ height: screenWidth >= 640 ? '350px' : '150px'}"
-            >
+        >
           <swiper-slide
               v-for="day in data.daily"
               :key="day.dt"
@@ -223,5 +249,6 @@ const getCurrentTime = () => {
   align-items: center;
   overflow: hidden;
   max-height: 100%;
+  width: 100%;
 }
 </style>
