@@ -19,7 +19,7 @@ Ce projet est une application météo développée avec Vue 3 et Vite pour manag
 
 *Recherche de météo pour une ville*
 
-![Capture d'écran de la météo détaillée](https://image.noelshack.com/fichiers/2023/38/5/1695347181-capture-d-ecran-2023-09-22-a-03-42-27.png)
+![Capture d'écran de la météo détaillée](https://image.noelshack.com/fichiers/2023/38/5/1695374820-capture-d-ecran-2023-09-22-a-11-24-18.png)
 
 *Vue détaillée de la météo (Actuelle, sur plusieurs jours)*
 
