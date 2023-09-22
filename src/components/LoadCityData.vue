@@ -94,8 +94,8 @@ const removeCity = () => {
       <div class="text-white mt-8">
         <h2 class="text-xl">Météo horaire</h2>
 
-        <div class="max-h-[200px] overflow-y-auto mt-2">
-          <div v-for="hourData in data.hourly" :key="hourData.dt" class="flex justify-between">
+        <div class="max-h-[200px] overflow-y-auto p-4 mt-2">
+          <div v-for="hourData in data.hourly" :key="hourData.dt" class="flex justify-between p-4">
             <p class="whitespace-nowrap text-md">
               {{ new Date(hourData.currentTime).toLocaleTimeString('fr', { hour: 'numeric' }) }}
             </p>
@@ -112,11 +112,11 @@ const removeCity = () => {
       <div class="text-white mt-8">
         <h2 class="text-xl">Prévisions sur 7 jours</h2>
 
-        <div class="max-h-[300px] overflow-y-auto mt-6">
+        <div class="max-h-[300px] overflow-y-auto mt-6 p-4">
           <div
             v-for="day in data.daily"
             :key="day.dt"
-            class="flex items-center border border-white rounded-b shadow-2xl sm:rounded-lg bg-[#32142E] p-4 mt-2"
+            class="flex items-center border border-white rounded-b shadow-2xl sm:rounded-lg bg-[#32142E] p-4 mt-4"
           >
             <p class="flex-1">
               {{ new Date(day.dt * 1000).toLocaleDateString('fr', { weekday: 'long' }) }}
