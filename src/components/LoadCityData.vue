@@ -15,8 +15,7 @@ const router = useRouter()
 const loadCityData = async () => {
   try {
     const response = await axios.get(
-        `https://api.openweathermap.org/data/3.0/onecall?lat=${router.currentRoute.value.query.lat}&lon=${router.currentRoute.value.query.lng}&lang=fr&appid=c000e4f393c4056dfacccba87cf88995
-&units=imperial`
+        `https://api.openweathermap.org/data/3.0/onecall?lat=${router.currentRoute.value.query.lat}&lon=${router.currentRoute.value.query.lng}&lang=fr&appid=c000e4f393c4056dfacccba87cf88995&units=metric`
     )
 
     const localOffset = new Date().getTimezoneOffset() * 60000
