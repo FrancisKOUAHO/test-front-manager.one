@@ -1,6 +1,8 @@
 <template>
+  <div class=" flex gap-28 flex-wrap w-full">
   <div v-for="city in savedCities" :key="city.id">
     <CityCard :city="city" @click="goToCityView(city)" />
+  </div>
   </div>
 
   <p v-if="savedCities.length === 0">
