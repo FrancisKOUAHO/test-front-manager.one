@@ -10,6 +10,8 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css/scrollbar'
 
+import GenericDisplay from "@/components/GenericDisplay.vue";
+
 const router = useRouter()
 
 const loadCityData = async () => {
@@ -93,29 +95,32 @@ console.log("data", data)
 
         <div class="flex flex-wrap justify-center gap-5 mb-32 w-full mt-16">
 
-          <div
-              class="flex justify-around items-center gap-4 text-white border border-white rounded-b shadow-2xl sm:rounded-lg bg-secondary p-6 mt-4 w-[400px]">
-            <i class="fa-solid fa-compress text-2xl"></i>
-            <div class="flex-col">
-              <h4 class="mb-2">Pression atmosphérique</h4>
-              <p class="flex-1 text-center">
-                {{ Math.round(data.daily[0].pressure) }}
-                <spa>hPa</spa>
-              </p>
-            </div>
-          </div>
+          <GenericDisplay
+              title="Pression atmosphérique"
+              :value="Math.round(data.daily[0].pressure)"
+              unit="hPa"
+              iconClass="fa-solid fa-compress text-3xl"
+          />
 
-          <div
-              class="flex justify-around items-center gap-4 text-white border border-white rounded-b shadow-2xl sm:rounded-lg bg-secondary p-6 mt-4 w-[400px]">
-            <i class="fa-solid fa-water text-2xl"></i>
-            <div class="flex-col">
-              <h4 class="mb-2">Humidité</h4>
-              <p class="flex-1 text-center">
-                {{ Math.round(data.daily[0].humidity) }}
-                <spa>hPa</spa>
-              </p>
-            </div>
-          </div>
+          <GenericDisplay
+              title="Humidité"
+              :value="Math.round(data.daily[0].humidity)"
+              unit="%"
+              iconClass="fa-solid fa-water text-3xl"
+          />
+
+          <GenericDisplay
+              title="Vitesse du vent"
+              :value="Math.round(data.daily[0].wind_speed)"
+              unit="km/h"
+              iconClass="fa-solid fa-wind text-3xl"
+          />
+
+          <GenericDisplay
+              title="direction du vent"
+              :value="Math.round(data.daily[0].humidity)"
+              iconClass="fa-brands fa-nfc-directional text-3xl"
+          />
         </div>
       </div>
 
