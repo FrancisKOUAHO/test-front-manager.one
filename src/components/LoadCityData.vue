@@ -116,7 +116,7 @@ const removeCity = () => {
           <div
             v-for="day in data.daily"
             :key="day.dt"
-            class="flex items-center border border-white rounded-b shadow-2xl sm:rounded-lg bg-[#32142E] p-4 mt-4"
+            class="flex items-center border border-white rounded-b shadow-2xl sm:rounded-lg bg-secondary p-4 mt-4"
           >
             <p class="flex-1">
               {{ new Date(day.dt * 1000).toLocaleDateString('fr', { weekday: 'long' }) }}
