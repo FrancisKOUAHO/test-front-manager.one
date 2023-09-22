@@ -15,7 +15,7 @@ const router = useRouter()
 const loadCityData = async () => {
   try {
     const response = await axios.get(
-        `https://api.openweathermap.org/data/3.0/onecall?lat=${router.currentRoute.value.query.lat}&lon=${router.currentRoute.value.query.lng}&exclude={part}&appid=c000e4f393c4056dfacccba87cf88995
+        `https://api.openweathermap.org/data/3.0/onecall?lat=${router.currentRoute.value.query.lat}&lon=${router.currentRoute.value.query.lng}&lang=fr&appid=c000e4f393c4056dfacccba87cf88995
 &units=imperial`
     )
 
@@ -146,7 +146,7 @@ const getCurrentTime = () => {
                 :src="`http://openweathermap.org/img/wn/${hourData.weather[0].icon}.png`"
                 alt=""
             />
-            <p class="text-xl">{{ Math.round(hourData.temp) }}&deg;</p>
+            <p class="text-xl">{{ Math.round(hourData.temp) }}&deg;C</p>
           </swiper-slide>
         </swiper>
         <div class="flex justify-center items-center mt-4">
@@ -183,7 +183,7 @@ const getCurrentTime = () => {
             :space-between="0"
             :direction="'vertical'"
             :pagination="{clickable: screenWidth >= 640 }"
-            :style="{ height: screenWidth >= 640 ? '350px' : '150px' }"
+            :style="{ height: screenWidth >= 640 ? '350px' : '150px'}"
             >
           <swiper-slide
               v-for="day in data.daily"
@@ -200,8 +200,8 @@ const getCurrentTime = () => {
                   alt=""
               />
               <div class="flex gap-2 flex-1 justify-end">
-                <p>H: {{ Math.round(day.temp.max) }}</p>
-                <p>B: {{ Math.round(day.temp.min) }}</p>
+                <p>H: {{ Math.round(day.temp.max) }} °C</p>
+                <p>B: {{ Math.round(day.temp.min) }} °C</p>
               </div>
             </div>
           </swiper-slide>
@@ -220,6 +220,8 @@ const getCurrentTime = () => {
 }
 
 .slide-content {
+  display: flex;
+  align-items: center;
   overflow: hidden;
   max-height: 100%;
 }
