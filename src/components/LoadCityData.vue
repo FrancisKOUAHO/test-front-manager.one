@@ -44,9 +44,9 @@ const removeCity = () => {
 </script>
 
 <template>
-  <div class="flex">
+  <div class="flex flex-col-reverse sm:flex-row">
     <div class="flex-1 p-4">
-      <div class="text-white p-4 bg-weather-secondary w-full">
+      <div class="text-white p-4 bg-primary w-full">
         <p>
           Vous prévisualisez actuellement cette ville, cliquez sur l'icône "🤍" pour commencer à
           suivre cette ville.
@@ -69,7 +69,7 @@ const removeCity = () => {
       </div>
     </div>
 
-    <div class="w-2/5 rounded-xl shadow-2xl sm:rounded-lg bg-[#19101E] p-4">
+    <div class="sm:w-2/5 rounded-xl shadow-2xl sm:rounded-lg bg-[#19101E] p-4 mt-4 sm:mt-0">
       <div class="flex justify-between">
         <h1 class="text-3xl text-white mt-2">{{ router.currentRoute.value.params.city }}</h1>
         <h4 class="text-xl text-white mt-6">08:54 AM</h4>
